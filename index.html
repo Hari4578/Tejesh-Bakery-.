@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tejesh Bakery — Salem's Finest Homemade Treats</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <nav class="navbar">
+    <div class="logo-wrap">
+      <div class="logo-icon">🧁</div>
+      <div class="logo-text">
+        <span class="brand">Tejesh Bakery</span>
+        <span class="tagline">Salem's Home Kitchen</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#menu">Menu</a>
+      <a href="#order">Order</a>
+      <a href="#track">Track Order</a>
+      <a href="admin.html" class="admin-link">Admin</a>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 <span id="cart-count">0</span>
+    </button>
+  </nav>
+
+  <div class="hero-content">
+    <div class="hero-badge">✦ Homemade with Love ✦</div>
+    <h1 class="hero-title">Freshly Baked<br /><em>Every Day</em></h1>
+    <p class="hero-sub">Brownies • Cookie Pies • Biscuits • Tea Cakes<br />Straight from our kitchen in Salem</p>
+    <div class="hero-ctas">
+      <a href="#menu" class="btn-primary">Browse Menu</a>
+      <a href="#order" class="btn-outline">Place Order</a>
+    </div>
+    <div class="hero-stats">
+      <div><strong>50+</strong><span>Varieties</span></div>
+      <div><strong>100%</strong><span>Homemade</span></div>
+      <div><strong>Salem</strong><span>Local Delivery</span></div>
+    </div>
+  </div>
+  <div class="hero-decor">
+    <div class="circle c1"></div>
+    <div class="circle c2"></div>
+    <div class="blob"></div>
+  </div>
+</header>
+
+<!-- MENU SECTION -->
+<section class="menu-section" id="menu">
+  <div class="section-header">
+    <div class="section-badge">Our Menu</div>
+    <h2>Handcrafted <em>Delights</em></h2>
+    <p>Every item baked fresh — order by weight or piece</p>
+  </div>
+
+  <div class="category-tabs" id="category-tabs">
+    <button class="tab active" data-cat="all">All</button>
+  </div>
+
+  <div class="menu-grid" id="menu-grid">
+    <div class="menu-loader">Loading menu…</div>
+  </div>
+</section>
+
+<!-- ORDER SECTION -->
+<section class="order-section" id="order">
+  <div class="section-header light">
+    <div class="section-badge alt">Place Order</div>
+    <h2>Ready to <em>Order?</em></h2>
+    <p>Fill in your details and we'll confirm via WhatsApp</p>
+  </div>
+
+  <div class="order-layout">
+    <!-- Cart Summary -->
+    <div class="cart-panel" id="cart-panel">
+      <h3>Your Cart</h3>
+      <div id="cart-items-list">
+        <p class="empty-cart">No items yet. Add from the menu above!</p>
+      </div>
+      <div class="cart-total" id="cart-total" style="display:none">
+        <span>Total:</span>
+        <strong id="total-amount">₹0</strong>
+      </div>
+    </div>
+
+    <!-- Customer Form -->
+    <div class="customer-form-wrap">
+      <form class="customer-form" id="order-form">
+        <div class="form-group">
+          <label>Your Name *</label>
+          <input type="text" id="cust-name" placeholder="Enter your full name" required />
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="cust-phone" placeholder="+91 XXXXX XXXXX" required />
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number</label>
+          <input type="tel" id="cust-whatsapp" placeholder="Same as phone? Leave blank" />
+        </div>
+        <div class="form-group">
+          <label>Delivery Address *</label>
+          <textarea id="cust-address" rows="3" placeholder="Street, area, Salem…" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Special Instructions</label>
+          <textarea id="cust-notes" rows="2" placeholder="Any customizations or notes…"></textarea>
+        </div>
+        <button type="submit" class="btn-primary full" id="submit-btn">
+          🛒 Place Order
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK ORDER -->
+<section class="track-section" id="track">
+  <div class="section-header">
+    <div class="section-badge">Track</div>
+    <h2>Track Your <em>Order</em></h2>
+    <p>Enter your phone number to see your order status</p>
+  </div>
+  <div class="track-box">
+    <div class="track-input-row">
+      <input type="tel" id="track-phone" placeholder="Enter your phone number" />
+      <button class="btn-primary" onclick="trackOrder()">Track</button>
+    </div>
+    <div id="track-results"></div>
+  </div>
+</section>
+
+<!-- CONTACT FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">🧁 Tejesh Bakery</div>
+      <p>Homemade baked goods delivered fresh in Salem</p>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact Us</h4>
+      <a href="tel:8825725372">📞 8825725372</a>
+      <a href="tel:9597619181">📞 9597619181</a>
+      <a href="https://wa.me/918825725372" target="_blank">💬 WhatsApp Us</a>
+      <a href="https://instagram.com/Tejesh_home_bakery_id" target="_blank">📸 @Tejesh_home_bakery_id</a>
+    </div>
+    <div class="footer-hours">
+      <h4>Salem, Tamil Nadu</h4>
+      <p>Orders via WhatsApp or online</p>
+      <p>Fresh bakes daily</p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 Tejesh Bakery. Made with ❤️ in Salem.</div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header">
+    <h3>Your Cart</h3>
+    <button onclick="toggleCart()">✕</button>
+  </div>
+  <div id="drawer-items"></div>
+  <div class="cart-drawer-footer">
+    <div class="drawer-total">Total: <strong id="drawer-total">₹0</strong></div>
+    <a href="#order" class="btn-primary full" onclick="toggleCart()">Proceed to Order</a>
+  </div>
+</div>
+
+<!-- ORDER SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal" style="display:none">
+  <div class="modal">
+    <div class="modal-icon">🎉</div>
+    <h3>Order Placed!</h3>
+    <p id="modal-msg">Your order has been received. We'll contact you on WhatsApp shortly.</p>
+    <p class="order-id-display">Order ID: <strong id="modal-order-id"></strong></p>
+    <button class="btn-primary" onclick="closeModal()">Done</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
